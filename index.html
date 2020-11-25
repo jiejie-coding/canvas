@@ -21,40 +21,60 @@
     myPics.height = document.documentElement.clientHeight
 
     const ctx = myPics.getContext('2d');
-    ctx.fillStyle = "black";
-    ctx.strokeStyle = 'none'
+    ctx.fillStyle = 'black'
+    ctx.strokeStyle = 'black'
+    ctx.lineWidth = 10;
+    ctx.lineCap = "round"
 
-    let x = 0;
-    let y = 0
+  
     let flag = false
-    addEventListener('mousedown', e => {
-      x = e.clientX
-      y = e.clientY
-      flag = true
-    })
-    addEventListener('mouseup',e => {
-      flag = false
-    })
-
-    addEventListener('mousemove', e => {
+    let x
+    let y
+    var isTouchDevice = 'ontouchstart' in document.documentElement;
+    // console.log(isTouchDevice);
+    
+    if(isTouchDevice) {
+      addEventListener('touchstart', e => {
+        x = e.touches[0].clientX
+        y = e.touches[0].clientY
+        flag = true
+      })
+      addEventListener('touchend',e => {
+        flag = false
+      })
+      addEventListener('touchmove',e=> {
         if(flag) {
-          drawLine(x, y, e.offsetX, e.offsetY);
-          x = e.offsetX
-          y = e.offsetY
+          drawLine(x, y, e.touches[0].clientX, e.touches[0].clientY);
+          x = e.touches[0].clientX
+          y = e.touches[0].clientY
         }
-    });
-    // drawLine(0, 0,300,300);
-    // drawLine(300,300,300,400);
-
+      })
+    } else {
+      addEventListener('mousedown', e => {
+        x = e.clientX
+        y = e.clientY
+        flag = true
+      })
+      addEventListener('mouseup',e => {
+        flag = false
+      })
+      addEventListener('mousemove', e => {
+          if(flag) {
+            drawLine(x, y, e.offsetX, e.offsetY);
+            x = e.offsetX
+            y = e.offsetY
+            
+          }
+      });
+    }
     function drawLine(x1, y1, x2, y2) {
       ctx.beginPath();
-      ctx.strokeStyle = 'black';
-      ctx.lineWidth = 10;
       ctx.moveTo(x1, y1);
       ctx.lineTo(x2, y2);
       ctx.stroke();
       ctx.closePath();
     }
+    
   </script>
 </body>
 
