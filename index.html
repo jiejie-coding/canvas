@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -11,24 +12,50 @@
     }
   </style>
 </head>
-<body>
-  <div id="canvas">
 
-  </div>
+<body>
+  <canvas id="myPics"></canvas>
   <script>
-    canvas.style.width = "100vw"
-    canvas.style.height = "100vh"
-    canvas.addEventListener('mousemove',(e) => {
-      let div=document.createElement('div')
-      console.log(div);
-      div.style.position="absolute"
-      div.style.top=e.clientY + 'px'
-      div.style.left=e.clientX + 'px'
-      div.style.border="6px solid #000"
-      div.style.marginLeft = -3 + 'px'
-      div.style.marginTop = -3 + 'px'
-      canvas.appendChild(div)
+    let myPics = document.getElementById("myPics");
+    myPics.width = document.documentElement.clientWidth
+    myPics.height = document.documentElement.clientHeight
+
+    const ctx = myPics.getContext('2d');
+    ctx.fillStyle = "black";
+    ctx.strokeStyle = 'none'
+
+    let x = 0;
+    let y = 0
+    let flag = false
+    addEventListener('mousedown', e => {
+      x = e.clientX
+      y = e.clientY
+      flag = true
     })
+    addEventListener('mouseup',e => {
+      flag = false
+    })
+
+    addEventListener('mousemove', e => {
+        if(flag) {
+          drawLine(x, y, e.offsetX, e.offsetY);
+          x = e.offsetX
+          y = e.offsetY
+        }
+    });
+    // drawLine(0, 0,300,300);
+    // drawLine(300,300,300,400);
+
+    function drawLine(x1, y1, x2, y2) {
+      ctx.beginPath();
+      ctx.strokeStyle = 'black';
+      ctx.lineWidth = 10;
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+      ctx.closePath();
+    }
   </script>
 </body>
+
 </html>
