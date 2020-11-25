@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+    }
+  </style>
+</head>
+<body>
+  <div id="canvas">
+
+  </div>
+  <script>
+    canvas.style.width = "100vw"
+    canvas.style.height = "100vh"
+    canvas.addEventListener('mousemove',(e) => {
+      let div=document.createElement('div')
+      console.log(div);
+      div.style.position="absolute"
+      div.style.top=e.clientY + 'px'
+      div.style.left=e.clientX + 'px'
+      div.style.border="6px solid #000"
+      div.style.marginLeft = -3 + 'px'
+      div.style.marginTop = -3 + 'px'
+      canvas.appendChild(div)
+    })
+  </script>
+</body>
+</html>
